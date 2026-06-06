@@ -1,0 +1,1095 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rejoindre la bÃªta fermÃ©e Android de DSCG Quiz et participer au concours quotidien.">
+  <title>DSCG Quiz - BÃªta fermÃ©e Android</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #060711;
+      --bg-soft: #0c0d1d;
+      --surface: rgba(18, 20, 42, 0.78);
+      --surface-strong: rgba(24, 26, 55, 0.94);
+      --surface-bright: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.14);
+      --line-strong: rgba(255, 255, 255, 0.22);
+      --text: #fbf9ff;
+      --muted: #aaa6c8;
+      --muted-2: #7f7a9e;
+      --violet: #8a4dff;
+      --violet-2: #5c7cff;
+      --pink: #ff4fb4;
+      --gold: #ffd645;
+      --orange: #ff7a2e;
+      --green: #38d996;
+      --danger: #ff5c7a;
+      --shadow: 0 26px 86px rgba(0, 0, 0, 0.46);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(138, 77, 255, 0.2) 0%, transparent 32%),
+        linear-gradient(225deg, rgba(255, 122, 46, 0.16) 0%, transparent 28%),
+        linear-gradient(180deg, #080918 0%, var(--bg) 44%, #090716 100%);
+      color: var(--text);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 72%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      position: relative;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 24px 20px 42px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 64px;
+      margin-bottom: 34px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #ffbd38 0%, #ff792d 52%, #e53617 100%);
+      box-shadow: 0 0 30px rgba(255, 122, 46, 0.34);
+      color: white;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .brand-title {
+      display: grid;
+      gap: 2px;
+      font-weight: 900;
+      font-size: 1.06rem;
+      white-space: nowrap;
+    }
+
+    .brand-title span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .nav a {
+      padding: 10px 13px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(350px, 0.82fr);
+      gap: 34px;
+      align-items: center;
+      min-height: 690px;
+    }
+
+    .hero-copy {
+      padding: 12px 0 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255, 214, 69, 0.42);
+      border-radius: 999px;
+      background: rgba(255, 214, 69, 0.1);
+      color: var(--gold);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px rgba(56, 217, 150, 0.82);
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 22px 0 18px;
+      font-size: clamp(2.65rem, 7vw, 5.65rem);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .headline-gradient {
+      display: inline-block;
+      color: transparent;
+      background: linear-gradient(115deg, #fff 0%, #ffd645 22%, #ff7a2e 52%, #ff4fb4 78%, #8a4dff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 0;
+      color: #d9d5f6;
+      font-size: clamp(1.06rem, 2vw, 1.28rem);
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px 0 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 13px 19px;
+      border: 0;
+      border-radius: 16px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--violet), var(--pink), var(--orange));
+      font: inherit;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 15px 44px rgba(255, 79, 180, 0.28);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 52px rgba(255, 79, 180, 0.36);
+    }
+
+    .button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+      transform: none;
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
+      box-shadow: none;
+      color: var(--text);
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 28px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.055);
+      color: #ddd9f8;
+      font-size: 0.9rem;
+      font-weight: 760;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 690px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 17px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.035));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.58rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.35;
+    }
+
+    .product-visual {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone {
+      position: relative;
+      width: min(390px, 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 42px;
+      padding: 12px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04));
+      box-shadow: var(--shadow), 0 0 70px rgba(138, 77, 255, 0.23);
+    }
+
+    .phone-screen {
+      overflow: hidden;
+      min-height: 620px;
+      border-radius: 32px;
+      background:
+        linear-gradient(155deg, rgba(138, 77, 255, 0.2), transparent 36%),
+        linear-gradient(20deg, rgba(255, 122, 46, 0.16), transparent 34%),
+        #08091a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 18px;
+    }
+
+    .phone-status {
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .student-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, #864cff, #527cff);
+      box-shadow: 0 0 34px rgba(138, 77, 255, 0.42);
+      font-size: 25px;
+    }
+
+    .student-row b {
+      display: block;
+      font-size: 1.28rem;
+    }
+
+    .student-row span {
+      color: var(--gold);
+      font-weight: 780;
+      font-size: 0.9rem;
+    }
+
+    .xp-bar,
+    .mini-progress {
+      overflow: hidden;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .xp-bar div,
+    .mini-progress div {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--orange), var(--pink));
+    }
+
+    .phone-card {
+      margin-top: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 24px;
+      padding: 17px;
+      background: rgba(255, 255, 255, 0.068);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .phone-card.contest {
+      border-color: rgba(255, 214, 69, 0.62);
+      background:
+        linear-gradient(130deg, rgba(255, 214, 69, 0.16), rgba(138, 77, 255, 0.16)),
+        rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 32px rgba(255, 214, 69, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    }
+
+    .contest-layout {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .crown {
+      display: grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #ffcf2f, #ff8b2f);
+      color: #231400;
+      font-size: 48px;
+      box-shadow: 0 16px 34px rgba(255, 156, 42, 0.26);
+    }
+
+    .phone-chip {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(138, 77, 255, 0.42);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 820;
+      margin-bottom: 8px;
+    }
+
+    .phone-card h3 {
+      margin: 0;
+      font-size: 1.22rem;
+      line-height: 1.18;
+    }
+
+    .phone-card p {
+      margin: 7px 0 0;
+      color: #c8c2e5;
+      line-height: 1.38;
+      font-size: 0.9rem;
+    }
+
+    .leader-row {
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      gap: 9px;
+      align-items: center;
+      min-height: 40px;
+      border-radius: 14px;
+      padding: 8px 10px;
+      color: #e9e5ff;
+      background: rgba(255, 255, 255, 0.06);
+      margin-top: 8px;
+    }
+
+    .leader-row.me {
+      border: 1px solid rgba(255, 214, 69, 0.42);
+      color: var(--gold);
+      background: rgba(255, 214, 69, 0.08);
+    }
+
+    .signup-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 30px;
+      background:
+        linear-gradient(140deg, rgba(138, 77, 255, 0.2), rgba(255, 79, 180, 0.08) 42%, rgba(255, 214, 69, 0.1)),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .form {
+      position: relative;
+      padding: 24px;
+    }
+
+    .form-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .form h2 {
+      margin: 0 0 7px;
+      font-size: 1.55rem;
+    }
+
+    .form p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .time-badge {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(56, 217, 150, 0.11);
+      border: 1px solid rgba(56, 217, 150, 0.28);
+      color: #aef5d3;
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: #dedaf6;
+      font-weight: 750;
+      font-size: 0.9rem;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 11px 13px;
+      background: rgba(7, 9, 25, 0.76);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(255, 214, 69, 0.78);
+      box-shadow: 0 0 0 4px rgba(255, 214, 69, 0.12);
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .ue-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .ue-chip {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #d8d3f3;
+      font-weight: 850;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ue-chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ue-chip:has(input:checked) {
+      color: #111323;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--gold), #ff9d2e);
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #cbc6e5;
+      font-size: 0.88rem;
+      line-height: 1.42;
+    }
+
+    .consent input {
+      width: 18px;
+      min-height: 18px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+    }
+
+    .hp {
+      display: none;
+    }
+
+    .message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      line-height: 1.35;
+    }
+
+    .message.success {
+      display: block;
+      border-color: rgba(56, 217, 150, 0.45);
+      color: #b7f9d9;
+      background: rgba(56, 217, 150, 0.1);
+    }
+
+    .message.error {
+      display: block;
+      border-color: rgba(255, 92, 122, 0.45);
+      color: #ffd4dc;
+      background: rgba(255, 92, 122, 0.1);
+    }
+
+    .section {
+      margin-top: 30px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 26px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 17px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 1.55rem;
+    }
+
+    .section-title p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.055);
+      min-height: 136px;
+    }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      background: rgba(138, 77, 255, 0.22);
+      color: var(--gold);
+      font-weight: 950;
+    }
+
+    .card b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.04rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.48;
+      font-size: 0.94rem;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .step {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .step-num {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      font-weight: 950;
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .step span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.93rem;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .product-visual {
+        min-height: auto;
+        order: -1;
+      }
+
+      .phone {
+        width: min(430px, 100%);
+      }
+
+      .stats,
+      .cards,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        display: block;
+      }
+
+      .section-title p {
+        text-align: left;
+        margin-top: 8px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 18px 14px 34px;
+      }
+
+      .topbar {
+        margin-bottom: 20px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(2.38rem, 13vw, 4rem);
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .phone-screen {
+        min-height: 560px;
+      }
+
+      .contest-layout {
+        grid-template-columns: 74px 1fr;
+      }
+
+      .crown {
+        width: 74px;
+        height: 74px;
+        font-size: 39px;
+        border-radius: 23px;
+      }
+
+      .form,
+      .section {
+        padding: 18px;
+      }
+
+      .form-head {
+        display: block;
+      }
+
+      .time-badge {
+        display: inline-flex;
+        margin-top: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand" aria-label="DSCG Quiz">
+        <div class="brand-mark">D</div>
+        <div class="brand-title">DSCG Quiz <span>BÃªta fermÃ©e Android</span></div>
+      </div>
+      <nav class="nav" aria-label="Navigation">
+        <a href="#beta">BÃªta</a>
+        <a href="#concours">Concours</a>
+        <a href="#inscription">Inscription</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="beta">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Places bÃªta en cours d'ouverture</div>
+        <h1>Teste DSCG Quiz et rejoins le <span class="headline-gradient">concours bÃªta</span>.</h1>
+        <p class="lead">
+          Une app Android pour rÃ©viser le DSCG avec des cours, fiches, QCM et un mode concours quotidien. L'objectif : valider l'expÃ©rience avec de vrais candidats avant l'ouverture.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#inscription">Rejoindre la bÃªta</a>
+          <a class="button secondary" href="#deroulement">Comment Ã§a marche</a>
+        </div>
+        <div class="trust-row" aria-label="Garanties de la bÃªta">
+          <span class="trust-pill">AccÃ¨s contrÃ´lÃ©</span>
+          <span class="trust-pill">Test fermÃ© Google Play</span>
+          <span class="trust-pill">DonnÃ©es limitÃ©es</span>
+        </div>
+        <div class="stats" aria-label="Points clÃ©s">
+          <div class="stat">
+            <strong>14 j</strong>
+            <span>de test fermÃ© pour aider Ã  valider l'application</span>
+          </div>
+          <div class="stat">
+            <strong>15 Q</strong>
+            <span>par Ã©preuve quotidienne en mode concours</span>
+          </div>
+          <div class="stat">
+            <strong>DSCG</strong>
+            <span>cours, fiches et QCM selon les UE activÃ©es</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-visual" aria-label="AperÃ§u de l'application DSCG Quiz">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-status"><span>19:00</span><span>5G 100%</span></div>
+            <div class="student-row">
+              <div class="avatar">D</div>
+              <div>
+                <b>Ã‰tudiant</b>
+                <span>Niveau 2 Â· 87 XP</span>
+              </div>
+            </div>
+            <div class="xp-bar" aria-hidden="true"><div style="width:58%"></div></div>
+
+            <div class="phone-card contest">
+              <div class="contest-layout">
+                <div class="crown">â˜…</div>
+                <div>
+                  <span class="phone-chip">Concours du jour</span>
+                  <h3>15 questions pour grimper au classement</h3>
+                  <p>1 minute par question Â· classement affichÃ© aprÃ¨s l'Ã©preuve.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-card">
+              <span class="phone-chip">Continuer</span>
+              <h3>UE1 Â· Droit des sociÃ©tÃ©s</h3>
+              <p>Reprendre ta derniÃ¨re notion et enchaÃ®ner sur un quiz court.</p>
+              <div class="mini-progress" style="margin-top:13px" aria-hidden="true"><div style="width:72%"></div></div>
+            </div>
+
+            <div class="phone-card">
+              <span class="phone-chip">Ligue bÃªta</span>
+              <div class="leader-row"><span>1</span><span>Sophie M.</span><b>850 XP</b></div>
+              <div class="leader-row"><span>2</span><span>Thomas K.</span><b>610 XP</b></div>
+              <div class="leader-row me"><span>3</span><span>Toi</span><b>340 XP</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="signup-card" id="inscription" aria-label="Formulaire d'inscription bÃªta">
+        <form class="form" id="signupForm">
+          <div class="form-head">
+            <div>
+              <h2>Demande d'accÃ¨s bÃªta</h2>
+              <p>ReÃ§ois le lien de test fermÃ© et les informations du concours.</p>
+            </div>
+            <span class="time-badge">30 secondes</span>
+          </div>
+
+          <div class="grid">
+            <label>
+              PrÃ©nom
+              <input name="first_name" autocomplete="given-name" minlength="2" maxlength="80" required>
+            </label>
+            <label>
+              Nom
+              <input name="last_name" autocomplete="family-name" minlength="2" maxlength="80" required>
+            </label>
+            <label class="full">
+              Email
+              <input name="email" type="email" autocomplete="email" maxlength="160" required>
+            </label>
+            <label>
+              Ville ou rÃ©gion
+              <input name="city_region" autocomplete="address-level2" minlength="2" maxlength="120" required>
+            </label>
+            <label>
+              Tranche d'Ã¢ge
+              <select name="age_range">
+                <option value="non_precise">Je prÃ©fÃ¨re ne pas prÃ©ciser</option>
+                <option value="moins_20">Moins de 20 ans</option>
+                <option value="20_29">20 Ã  29 ans</option>
+                <option value="30_39">30 Ã  39 ans</option>
+                <option value="40_plus">40 ans et plus</option>
+              </select>
+            </label>
+            <fieldset class="full" style="border:0;padding:0;margin:0;">
+              <legend style="font-weight:850;margin-bottom:8px;">UE que tu veux rÃ©viser</legend>
+              <div class="ue-grid">
+                <label class="ue-chip"><input type="checkbox" name="ues" value="1">UE 1</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="2">UE 2</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="3">UE 3</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="4">UE 4</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="5">UE 5</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="6">UE 6</label>
+                <label class="ue-chip"><input type="checkbox" name="ues" value="7">UE 7</label>
+              </div>
+            </fieldset>
+            <label class="consent full">
+              <input name="consent" type="checkbox" required>
+              <span>J'accepte que mes informations soient utilisÃ©es pour gÃ©rer ma demande d'accÃ¨s Ã  la bÃªta DSCG Quiz et recevoir les informations liÃ©es au test fermÃ©.</span>
+            </label>
+            <label class="hp" aria-hidden="true">
+              Site web
+              <input name="website" tabindex="-1" autocomplete="off">
+            </label>
+            <button class="button full" type="submit" id="submitButton">Envoyer ma demande</button>
+          </div>
+
+          <div class="message" id="formMessage" role="status" aria-live="polite"></div>
+        </form>
+      </aside>
+    </section>
+
+    <section class="section" id="deroulement">
+      <div class="section-title">
+        <h2>DÃ©roulement simple</h2>
+        <p>Le but est de crÃ©er un groupe de testeurs motivÃ©s, sans friction inutile.</p>
+      </div>
+      <div class="timeline">
+        <div class="step"><div class="step-num">1</div><b>Inscription</b><span>Tu remplis le formulaire avec ton email et les UE que tu veux travailler.</span></div>
+        <div class="step"><div class="step-num">2</div><b>Validation</b><span>Tu reÃ§ois le lien Google Play du test fermÃ© aprÃ¨s validation.</span></div>
+        <div class="step"><div class="step-num">3</div><b>Test bÃªta</b><span>Tu utilises l'app pendant la pÃ©riode de test et tu remontes les bugs.</span></div>
+        <div class="step"><div class="step-num">4</div><b>Concours</b><span>Tu participes aux Ã©preuves quotidiennes si tu veux te challenger.</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="concours">
+      <div class="section-title">
+        <h2>Concours bÃªta</h2>
+        <p>Un rendez-vous quotidien pour motiver les testeurs et observer l'app en conditions rÃ©elles.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">15</div>
+          <b>Ã‰preuve quotidienne</b>
+          <p>15 questions, 1 minute par question, sur les UE activÃ©es dans l'application.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">#</div>
+          <b>Classement protÃ©gÃ©</b>
+          <p>Le classement n'est pas affichÃ© pendant l'Ã©preuve pour ne pas casser la motivation.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">XP</div>
+          <b>Objectif bÃªta</b>
+          <p>RepÃ©rer les bugs, mesurer l'engagement et amÃ©liorer les QCM avant l'ouverture.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Â© 2026 DSCG Quiz</span>
+      <span><a href="cgu-confidentialite.html">CGU et confidentialitÃ©</a> Â· <a href="suppression-donnees.html">Suppression des donnÃ©es</a></span>
+    </footer>
+  </main>
+
+  <script>
+    const SUPABASE_URL = "https://zpefqcxajqgswqbtbvpt.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_G__-HNBYE_EgxESRQpFcZg_faZ41vY-";
+    const form = document.getElementById("signupForm");
+    const message = document.getElementById("formMessage");
+    const submitButton = document.getElementById("submitButton");
+
+    function showMessage(type, text) {
+      message.className = "message " + type;
+      message.textContent = text;
+    }
+
+    function cleanText(value) {
+      return String(value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function selectedUes(formData) {
+      return [...formData.getAll("ues")]
+        .map((value) => Number.parseInt(value, 10))
+        .filter((value, index, array) => Number.isInteger(value) && value >= 1 && value <= 7 && array.indexOf(value) === index);
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      if (cleanText(formData.get("website"))) {
+        showMessage("success", "Merci, ta demande a bien Ã©tÃ© prise en compte.");
+        form.reset();
+        return;
+      }
+
+      const desiredUes = selectedUes(formData);
+      if (desiredUes.length === 0) {
+        showMessage("error", "Choisis au moins une UE Ã  rÃ©viser.");
+        return;
+      }
+
+      const payload = {
+        email: cleanText(formData.get("email")).toLowerCase(),
+        first_name: cleanText(formData.get("first_name")),
+        last_name: cleanText(formData.get("last_name")),
+        sex: "non_precise",
+        age_range: cleanText(formData.get("age_range")) || "non_precise",
+        city_region: cleanText(formData.get("city_region")),
+        desired_ues: desiredUes,
+        status: "pending"
+      };
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Envoi en cours...";
+      showMessage("", "");
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/dscg_signup_requests`, {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          if (response.status === 409 || errorText.includes("idx_dscg_signup_requests_email_pending")) {
+            throw new Error("Une demande est dÃ©jÃ  en attente pour cet email.");
+          }
+          throw new Error("Impossible d'envoyer la demande pour le moment.");
+        }
+
+        form.reset();
+        showMessage("success", "Demande envoyÃ©e. Tu recevras les informations de bÃªta par email dÃ¨s validation.");
+      } catch (error) {
+        showMessage("error", error.message || "Une erreur est survenue.");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Envoyer ma demande";
+      }
+    });
+  </script>
+</body>
+</html>
+
